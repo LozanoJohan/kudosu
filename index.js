@@ -50,11 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
             verifyPad(index)
             verifyRow(index)
 
-            if (verifyGrid()){
-                winMessage.style.display = 'block'  
-            } else {
-                winMessage.style.display = 'none'  
-            }
+            verifyGrid() ? winMessage.style.display = 'block' : winMessage.style.display = 'none'  
+            
         });
     })
 

@@ -7,7 +7,9 @@ import { getColorsCount } from "../../utils/color.js";
 export const verifyGrid = () => {
 
     return Array.from(document.querySelectorAll('.square'))
-                .every(square => square.style.borderColor !== 'red' && square.style.backgroundColor !== UNFILL_COLOR) 
+                .every(square => square.style.borderColor !== 'red' 
+                        && square.style.backgroundColor !== UNFILL_COLOR
+                        && square.style.backgroundColor !== '')
 }
 
 export const verify = (squareID) => {
