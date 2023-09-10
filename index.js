@@ -1,20 +1,41 @@
 import { getPickedColor } from "./states.js";
 import { setColor } from "./utils/color.js";
 import { currentColorElement } from "./components/colorPicker.js";
-import { verifyCol, verifyGrid, verifyPad, verifyRow } from "./tables/grid/logic.js";
+import { verifyCol, verifyGrid, verifyPad, verifyRow } from "./tables/grid/verify.js";
 import { fillSomeSpots, resetBoard } from "./utils/fill.js";
+import { solve } from "./solver/index.js";
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    let intervalId;
 
     currentColorElement.style.background = getPickedColor()
     fillSomeSpots()
 
-    document.querySelector('button').addEventListener('click', () => {
+    document.querySelector('#reset').addEventListener('click', () => {
         resetBoard()
         fillSomeSpots()
+        
+        resetButtons()
     })
+
+    const solveButton = document.querySelector('#solve')
+    const stopButton = document.querySelector('#stop')
+        
+    solveButton.addEventListener('click', () => {
+
+        intervalId = solve()
+        
+        solveButton.style.display = 'none'
+        stopButton.style.display = 'inline-block'
+    })
+
+    stopButton.addEventListener('click', () => {
+
+        resetButtons()
+    })
+
     const squareElements = document.querySelectorAll('.square')
 
     squareElements.forEach((squareElement) => {
@@ -24,14 +45,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const index = squareElement.getAttribute('id')
             setColor(squareElement, getPickedColor(), index)
 
-            console.log(verifyCol(index))
-            console.log(verifyPad(index))
-            console.log(verifyRow(index))
+            verifyCol(index)
+            verifyPad(index)
+            verifyRow(index)
+
+            const winMessage = document.querySelector('#win-p')
 
             if (verifyGrid()){
-                const winMessage = document.querySelector('#win-p')
                 winMessage.style.display = 'block'  
+            } else {
+                winMessage.style.display = 'none'  
             }
         });
     })
+
+    const resetButtons = () => {
+
+        clearInterval(intervalId)
+    
+        stopButton.style.display = 'none'
+        solveButton.style.display = 'inline-block'
+        winMessage.style.display = 'none'  
+
+    }
 });
+

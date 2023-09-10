@@ -1,7 +1,6 @@
 import { GRID_HEIGHT } from "../tables/grid/config.js";
 
 export const getX = (i) => {
-    console.log(i)
     return parseInt(i.split('-')[1])
 }
 

@@ -1,6 +1,8 @@
 export const GRID_WIDTH = 3
 export const GRID_HEIGHT = 3
 
+export const SOLVE_STEP_TIME = 10; // milisecons
+
 export const STARTING_COLORS_IN_ROW = 3
 
 export const COLORS = {
