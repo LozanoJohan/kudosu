@@ -9,6 +9,7 @@ import { solve } from "./solver/index.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     let intervalId;
+    let winMessage = document.querySelector('#win-p')
 
     currentColorElement.style.background = getPickedColor()
     fillSomeSpots()
@@ -48,8 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
             verifyCol(index)
             verifyPad(index)
             verifyRow(index)
-
-            const winMessage = document.querySelector('#win-p')
 
             if (verifyGrid()){
                 winMessage.style.display = 'block'  
