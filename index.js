@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawBoard()
     drawColorPicker()
-
+    
     let intervalId;
     let winMessage = document.querySelector('#win-p')
 
