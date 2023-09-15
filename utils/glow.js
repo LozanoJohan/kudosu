@@ -22,8 +22,11 @@ export const setWrong = (squares) => {
     })
 }
 
-export const setDefault = (squares) => {
-    squares.map(square => {
+export const setDefault = () => {
+
+    const squares = document.querySelectorAll('.square')
+
+    Array.from(squares).map(square => {
         
         if (!square.classList.contains('blocked'))
             square.style.borderColor = ''

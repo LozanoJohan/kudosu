@@ -1,9 +1,12 @@
 import { getPickedColor } from "../states.js";
 import { setColor } from "../utils/color.js";
 import { BOARD_LENGTH, GRID_HEIGHT, GRID_WIDTH } from "../config/config.js";
+import { verifyCol, verifyGrid, verifyPad, verifyRow } from "../utils/verify.js";
+import { setDefault } from "../utils/glow.js";
 
 export let board = []
 const gridElement = document.querySelector(".grid");
+const winMessage = document.querySelector('#win-p')
 
 export const drawBoard = () => {
     board = []
@@ -32,10 +35,12 @@ export const drawBoard = () => {
             squareElement.addEventListener("click", () => {
 
                 setColor(squareElement, getPickedColor())
-    
+                
+                setDefault()
+
                 verifyCol(squareId)
                 verifyPad(squareId)
-                verifyRow(squareId)
+                console.log(verifyRow(squareId))
     
                 verifyGrid() ? winMessage.style.display = 'block' : winMessage.style.display = 'none'  
                 

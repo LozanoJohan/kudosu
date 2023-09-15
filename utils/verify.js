@@ -48,18 +48,16 @@ const verifyColors = (elements) => {
     const values = getColorsCount(colors)
     const valuesWithoutUnset = getColorsCount(colorsWithoutUnset)
 
-    const COLOR_NUMBER = Math.floor(BOARD_LENGTH / GRID_WIDTH)
+    if (valuesWithoutUnset.some(num => num > GRID_WIDTH)) {
+        setWrong(elements)
+        return undefined // More than 3 of any color
+    }
 
-    if (valuesWithoutUnset.some(num => num > COLOR_NUMBER)) return undefined // More than 3 of any color
     if (colors.includes("") || colors.includes(UNFILL_COLOR)) return null // There is unset square
 
-    if (values.every(num => num === COLOR_NUMBER)) {
+    if (values.every(num => num === GRID_WIDTH)) {
         addGlow(elements)
         return true  // Elements are valid
     }   
-    else {
-        setWrong(elements)
-        return false  // Elements are invalid
-    } 
 }
 

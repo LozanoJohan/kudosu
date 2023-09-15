@@ -3,6 +3,7 @@ import { AVAIABLE_COLORS, BOARD_LENGTH, SOLVE_STEP_TIME, UNFILL_COLOR } from "..
 import { verifyCol, verifyGrid, verifyPad, verifyRow } from "../utils/verify.js";
 import { arraySample } from "../utils/arraySample.js";
 import { setColor } from "../utils/color.js";
+import { setDefault } from "../utils/glow.js";
 
 export const solve = () => {
 
@@ -31,6 +32,8 @@ export const solve = () => {
     }
 
     const solveStep = () => {
+
+        setDefault()
 
         const row = board[y]
         const square = row[x]
