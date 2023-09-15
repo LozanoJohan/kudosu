@@ -9,6 +9,7 @@
 .color-picker {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .color-picker-section {

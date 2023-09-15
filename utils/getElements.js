@@ -1,5 +1,5 @@
-import { GRID_HEIGHT, GRID_WIDTH } from "../tables/grid/config.js";
-import { board } from "../tables/grid/board.js";
+import { GRID_HEIGHT, GRID_WIDTH } from "../config/config.js";
+import { board } from "../components/board.js";
 import { getPadStart, getX, getY } from "./positions.js";
 
 

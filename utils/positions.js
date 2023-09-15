@@ -1,4 +1,4 @@
-import { GRID_HEIGHT } from "../tables/grid/config.js";
+import { GRID_HEIGHT } from "../config/config.js";
 
 export const getX = (i) => {
     return parseInt(i.split('-')[1])

@@ -14,8 +14,9 @@
 .square {
     width: 100%;
     border: 1px solid black;
-    background: rgb(198, 198, 198);
+    background-color: rgb(255, 255, 255);
     position: relative;
+    transition: all 0.2s ease-in-out;
 }
 
 .square-glow {
@@ -24,6 +25,10 @@
 
 .square-left {
     border-left: 5px solid black;
+}
+
+.current {
+    background-color: aqua;
 }
 
 .square:hover::after {

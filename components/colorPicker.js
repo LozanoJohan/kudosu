@@ -1,31 +1,36 @@
 import { getPickedColor, setPickedColor } from "../states.js";
-import { COLORS_LENGTH, getColorByIndex } from "../tables/grid/config.js";
+import { COLORS_LENGTH, getColorByIndex } from "../config/config.js";
 
 
 export const currentColorElement = document.querySelector('#current-color');
-
 const colorPickerSection = document.querySelector('.color-picker');
-const colorPickers = Array.from({ length: COLORS_LENGTH }, (_, i) => {
 
-    const colorPicker = document.createElement("div");
+export const drawColorPicker = () => {
 
-    colorPicker.addEventListener('mouseover', () => {
-        colorPicker.style.cursor = 'crosshair'; 
-    });
-      
-    colorPicker.addEventListener('mouseout', () => {
-        colorPicker.style.cursor = 'auto'; 
-    });
+    colorPickerSection.innerHTML = ''
 
-    colorPicker.addEventListener('click', () => {
+    const colorPickers = Array.from({ length: COLORS_LENGTH }, (_, i) => {
 
-        const computedStyle = window.getComputedStyle(colorPicker);
-        setPickedColor(computedStyle.backgroundColor);
+        const colorPicker = document.createElement("div");
+
+        colorPicker.addEventListener('mouseover', () => {
+            colorPicker.style.cursor = 'crosshair'; 
+        });
         
-        currentColorElement.style.background = getPickedColor();
-    });
+        colorPicker.addEventListener('mouseout', () => {
+            colorPicker.style.cursor = 'auto'; 
+        });
 
-    colorPicker.style.background = getColorByIndex(i);
+        colorPicker.addEventListener('click', () => {
 
-    colorPickerSection.appendChild(colorPicker);
-})
+            const computedStyle = window.getComputedStyle(colorPicker);
+            setPickedColor(computedStyle.backgroundColor);
+            
+            currentColorElement.style.background = getPickedColor();
+        });
+
+        colorPicker.style.background = getColorByIndex(i);
+
+        colorPickerSection.appendChild(colorPicker);
+    })
+}

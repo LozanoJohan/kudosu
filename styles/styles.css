@@ -92,6 +92,19 @@ span {
     p {
         height: 10px;
     }
+    .color-picker div {
+        height: 50px;
+        width: 50px;
+
+    }
+    #current-color {
+        height: 55px;
+        width: 55px;
+    }
+    .difficulty-buttons {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 

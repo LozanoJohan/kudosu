@@ -1,8 +1,8 @@
-import { getColElements, getPadElements, getRowElements } from "../../utils/getElements.js";
-import { addGlow, setWrong } from "../../utils/glow.js";
-import { GRID_WIDTH, UNFILL_COLOR } from "./config.js"
-import { board } from "./board.js";
-import { getColorsCount } from "../../utils/color.js";
+import { getColElements, getPadElements, getRowElements } from "./getElements.js";
+import { addGlow, setWrong } from "./glow.js";
+import { BOARD_LENGTH, GRID_WIDTH, UNFILL_COLOR } from "../config/config.js"
+import { board } from "../components/board.js";
+import { getColorsCount } from "./color.js";
 
 export const verifyGrid = () => {
 
@@ -22,7 +22,7 @@ export const verify = (squareID) => {
 }
 
 export const verifyPad = (squareID) => {
-    
+
     const pad = getPadElements(squareID);
     return verifyColors(pad);
 }
@@ -43,24 +43,23 @@ export const verifyCol = (squareID) => {
 const verifyColors = (elements) => {
 
     const colors = elements.map(element => element.style.backgroundColor)
-    const colorsWithoutUnset = colors.filter(color => color !== UNFILL_COLOR)
+    const colorsWithoutUnset = colors.filter(color => color !== UNFILL_COLOR && color !== "")
 
     const values = getColorsCount(colors)
     const valuesWithoutUnset = getColorsCount(colorsWithoutUnset)
 
-    const COLOR_NUMBER = GRID_WIDTH
+    const COLOR_NUMBER = Math.floor(BOARD_LENGTH / GRID_WIDTH)
 
-    if (valuesWithoutUnset.some(num => num > COLOR_NUMBER) 
-                && valuesWithoutUnset.length < COLOR_NUMBER) return undefined // More than 3 of any color
+    if (valuesWithoutUnset.some(num => num > COLOR_NUMBER)) return undefined // More than 3 of any color
     if (colors.includes("") || colors.includes(UNFILL_COLOR)) return null // There is unset square
+
     if (values.every(num => num === COLOR_NUMBER)) {
-        
         addGlow(elements)
-        return true
-    }   // Elements are valid
+        return true  // Elements are valid
+    }   
     else {
         setWrong(elements)
-        return false
-    } // Elements are invalid
+        return false  // Elements are invalid
+    } 
 }
 

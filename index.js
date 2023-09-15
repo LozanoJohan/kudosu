@@ -1,13 +1,17 @@
 import { getPickedColor } from "./states.js";
-import { setColor } from "./utils/color.js";
-import { currentColorElement } from "./components/colorPicker.js";
-import { verifyCol, verifyGrid, verifyPad, verifyRow } from "./tables/grid/verify.js";
+import { currentColorElement, drawColorPicker } from "./components/colorPicker.js";
 import { fillSomeSpots, resetBoard } from "./utils/fill.js";
-import { solve } from "./solver/index.js";
+import { onTimeOut, solve } from "./solver/index.js";
+import { SOLVE_TIMEOUT } from "./config/config.js";
+import { drawBoard } from "./components/board.js";
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    drawBoard()
+    drawColorPicker()
+
     let intervalId;
     let winMessage = document.querySelector('#win-p')
 
@@ -27,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     solveButton.addEventListener('click', () => {
 
         intervalId = solve()
-        
+
         solveButton.style.display = 'none'
         stopButton.style.display = 'inline-block'
     })
@@ -35,24 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     stopButton.addEventListener('click', () => {
 
         resetButtons()
-    })
-
-    const squareElements = document.querySelectorAll('.square')
-
-    squareElements.forEach((squareElement) => {
-
-        squareElement.addEventListener("click", () => {
-
-            const index = squareElement.getAttribute('id')
-            setColor(squareElement, getPickedColor(), index)
-
-            verifyCol(index)
-            verifyPad(index)
-            verifyRow(index)
-
-            verifyGrid() ? winMessage.style.display = 'block' : winMessage.style.display = 'none'  
-            
-        });
     })
 
     const resetButtons = () => {

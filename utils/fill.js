@@ -1,8 +1,9 @@
-import { AVAIABLE_COLORS, STARTING_COLORS_IN_ROW, UNFILL_COLOR } from "../tables/grid/config.js"
-import { board } from "../tables/grid/board.js"
+import { AVAIABLE_COLORS, BOARD_LENGTH, STARTING_COLORS_IN_ROW, UNFILL_COLOR } from "../config/config.js"
+import { board } from "../components/board.js"
 import { getColorsCount, setColor } from "./color.js"
 import { arraySample } from "./arraySample.js"
 import { getColElements, getRowElements } from "./getElements.js"
+import { verify, verifyCol, verifyPad, verifyRow } from "./verify.js"
 
 export const fillSomeSpots = () => {
 
@@ -12,7 +13,7 @@ export const fillSomeSpots = () => {
 
         for (let i = 0; i < STARTING_COLORS_IN_ROW; i++) {
 
-            randomXPositions.push(Math.floor(9 * Math.random()))
+            randomXPositions.push(Math.floor(BOARD_LENGTH * Math.random()))
         }
         randomXPositions.forEach(x => {
 
@@ -23,22 +24,24 @@ export const fillSomeSpots = () => {
         })    
     })
 
-    //if (!checkStartingBoard()) fillSomeSpots()
+    if (isBoardImposible()) {
+
+        resetBoard()
+        fillSomeSpots()
+    }
 }
 
-const checkStartingBoard = () => {
+const isBoardImposible = () => {
 
     board.forEach((row) => {
 
-        const index = row[0].getAttribute('id')
-        const squares = getColElements(index)
+        row.forEach(square => {
 
-        const colors = squares.filter(c => c !== UNFILL_COLOR).map(s => s.style.backgroundColor)
-        const colorsCount = getColorsCount(colors)
-        console.log(colorsCount)
-
-        if (colorsCount.some(c => c > 3)) return false
+            const verifyArr = [verifyCol(square.getAttribute('id')), verifyRow(square.getAttribute('id')), verifyPad(square.getAttribute('id'))]
+            if (verifyArr.some(verify => verify === undefined)) return true
+        })
     })
+    return false
 }
 
 export const resetBoard = () => {
@@ -50,17 +53,5 @@ export const resetBoard = () => {
         s.classList.remove('square-glow')
         s.style.borderColor = 'black'
     })
-    })
-}
-
-export const resetRow = (y) => {
-
-    board[y].forEach(square => {
-
-        if (square.classList.contains('blocked')) return
-
-        setColor(square, UNFILL_COLOR)
-        square.classList.remove('square-glow')
-        square.style.borderColor = 'black'
     })
 }
